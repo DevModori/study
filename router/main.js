@@ -14,5 +14,19 @@ module.exports = function(app, fs)
             title: "MY HOMEPAGE",
             length: 5
         })
-    })
+    });
+
+    app.get('/list', function(req, res) {
+        fs.readFile(__dirname + "/../data/" + "user.json", "utf8", function(err, data) {
+            console.log(data);
+            res.end(data);
+        });
+    });
+
+    app.get('/getUser/:username', function(req, res) {
+        fs.readFile(__dirname + "/../data/user.json", "utf8", function(err, data) {
+            let users = JSON.parse(data);
+            res.json(users[req.params.username]);
+        });
+    });
 }
